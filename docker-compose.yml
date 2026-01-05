@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=http://localhost:8001
+    ports:
+      - "3001:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/app:/app
+      - models_data:/app/models
+    ports:
+      - "8001:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=info
+    command: ["sh", "-c", "while [ ! -f /app/models/.training_done ]; do echo 'Waiting for model training...'; sleep 2; done && echo 'Models ready! Starting server...' && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"]
+    depends_on:
+      train_models:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    restart: unless-stopped
+
+  train_models:
+    build:
+      context: ./train_models
+      dockerfile: Dockerfile
+    volumes:
+      - models_data:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["sh", "-c", "python train.py && echo 'Training complete!' && touch /app/models/.training_done"]
+    restart: on-failure:3
+
+volumes:
+  models_data:
