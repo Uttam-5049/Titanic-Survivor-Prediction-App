@@ -71,7 +71,7 @@ The machine learning models are stored as Pickle files and integrated into the w
 ## DevOps and CI/CD
 
 ### Version Control
-- Managed with GitLab.
+- Managed with GitHub.
 - Weekly commits to ensure active development.
 
 ### Docker
@@ -92,7 +92,7 @@ The machine learning models are stored as Pickle files and integrated into the w
 ### Quality Assurance
 - Conducted code reviews.
 - Used static analysis tools.
-- Implemented continuous integration with GitLab CI.
+- Implemented continuous integration with GitHub CI.
 
 ### Results
 - Early bug detection and fixing.
