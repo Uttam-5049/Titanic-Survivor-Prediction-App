@@ -22,7 +22,7 @@ The Titanic Survivor Prediction App is designed to predict the survival chances 
 
 ### DevOps
 - **Docker:** For containerizing the application.
-- **GitLab CI/CD:** For continuous integration and deployment.
+- **GitHub CI/CD:** For continuous integration and deployment.
 
 ### Project Management
 - **JIRA:** For task tracking and sprint planning.
