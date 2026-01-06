@@ -79,7 +79,7 @@ The machine learning models are stored as Pickle files and integrated into the w
 - Docker Compose for managing multi-container applications.
 
 ### CI/CD Pipeline
-- GitLab CI for automated builds and testing.
+- GitHub CI for automated builds and testing.
 - Ensures code quality and deployability.
 
 ## Testing and Quality Assurance
